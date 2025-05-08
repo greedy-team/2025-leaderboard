@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 html,
-body,
+body {
+  @apply font-sans;
+}
 #root {
   width: 100%;
   height: 100%;

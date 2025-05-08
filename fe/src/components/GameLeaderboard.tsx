@@ -10,7 +10,7 @@ interface Props {
 const leftPos = [0, 300, 600, 900];
 
 export const GameLeaderboard: React.FC<Props> = ({ gameScores, titles }) => (
-  <div className="w-[1200px] h-[498px] absolute left-[120px] top-[512px] overflow-hidden">
+  <div className="w-[1200px] h-[498px] absolute left-[120px] top-[512px] overflow-visible">
     <p className="absolute left-[7px] top-[12px] text-[45px] font-bold text-black">
       🎮 미니게임 순위표
     </p>
