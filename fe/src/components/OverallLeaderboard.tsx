@@ -1,38 +1,34 @@
-const allScores: Record<string, number[]> = {
-  Alice: [95, 80, 83, 80],
-  Bob: [90, 75, 85],
-  Carol: [85, 88, 85],
-  Dave: [70, 90],
-};
+import React from "react";
+import type { Player } from "../types/leaderboard";
+import { OverallCard } from "../components/OverallCard";
 
-function OverallLeaderboard() {
-  const combinedScores = Object.entries(allScores).map(([name, scores]) => ({
-    name,
-    total: scores.reduce((a, b) => a + b, 0),
-  }));
+const leftPos = [0, 240, 480, 720, 960];
+const heights = [229, 178, 123, 79, 46];
+const tops = [74, 125, 180, 224, 257];
+const colors = ["#ffc756", "#ff7474", "#60bdff", "#c669ff", "#70ed59"];
+const medals = ["🥇", "🥈", "🥉", "", ""];
+const medalFs = ["text-[160px]", "text-[140px]", "text-[100px]", "", ""];
 
-  const sorted = combinedScores.sort((a, b) => b.total - a.total);
-
-  return (
-    <table className="table-auto w-full border border-gray-300">
-      <thead>
-        <tr className="bg-gray-100">
-          <th className="px-4 py-2">순위</th>
-          <th className="px-4 py-2">이름</th>
-          <th className="px-4 py-2">총점</th>
-        </tr>
-      </thead>
-      <tbody>
-        {sorted.map((entry, idx) => (
-          <tr key={entry.name}>
-            <td className="px-4 py-2 text-center">{idx + 1}</td>
-            <td className="px-4 py-2">{entry.name}</td>
-            <td className="px-4 py-2 text-center">{entry.total}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
+interface Props {
+  players: Player[];
 }
+export const OverallLeaderboard: React.FC<Props> = ({ players }) => (
+  <div className="w-[1200px] h-[375px] absolute left-[120px] top-[120px] overflow-hidden">
+    <p className="absolute left-[7px] top-0 text-[45px] font-bold text-black">
+      🏆 종합 순위표
+    </p>
 
-export default OverallLeaderboard;
+    {players.slice(0, 5).map((p, i) => (
+      <OverallCard
+        key={i}
+        player={p}
+        left={leftPos[i]}
+        barHeight={heights[i]}
+        barTop={tops[i]}
+        barColor={colors[i]}
+        medal={medals[i]}
+        medalFs={medalFs[i]}
+      />
+    ))}
+  </div>
+);
