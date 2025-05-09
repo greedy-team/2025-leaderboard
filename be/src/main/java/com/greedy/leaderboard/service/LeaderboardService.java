@@ -1,6 +1,5 @@
 package com.greedy.leaderboard.service;
 
-import com.greedy.leaderboard.dto.LeaderBoardResponse;
 import com.greedy.leaderboard.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +16,7 @@ public class LeaderboardService {
     private final PikachuVolleyRepository pikachuVolleyRepository;
     private final KeyzzleRepository keyzzleRepository;
     private final GreenyNeckRepository greenyNeckRepository;
-    private final CourseRegistrationRepository courseRegistrationRepository;
+    private final AllcllRepository allcllRepository;
 
 
 

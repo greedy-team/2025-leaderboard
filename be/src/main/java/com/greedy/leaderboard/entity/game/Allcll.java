@@ -6,16 +6,16 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 @Entity @Getter
-@Table(name = "course_registration")
-public class CourseRegistration extends BaseEntity {
+@Table(name = "allcll")
+public class Allcll extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private int score;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", unique = true)
     private User user;
 
 

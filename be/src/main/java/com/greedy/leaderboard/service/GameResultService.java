@@ -24,7 +24,7 @@ public class GameResultService {
     private final PikachuVolleyRepository pikachuVolleyRepository;
     private final KeyzzleRepository keyzzleRepository;
     private final GreenyNeckRepository greenyNeckRepository;
-    private final CourseRegistrationRepository courseRegistrationRepository;
+    private final AllcllRepository allcllRepository;
 
     @Transactional
     public ScoreSubmitResponse writeGameResult(ScoreSubmitRequest request) {
@@ -45,20 +45,20 @@ public class GameResultService {
             case  PIKACHU_VOLLEY:
                 submitStatus = upsertPikachuVolley(request, findUser);
                 break;
-            case COURSE_REGISTRATION:
-                submitStatus = upsertCourseRegistration(request, findUser);
+            case ALLCLL:
+                submitStatus = upsertAllcll(request, findUser);
                 break;
             default:
-                throw new InvalidGameNameException("존재하지 않는 게임", "게임은 greeny-neck, keyzzle, pikachu-volley, course-registration 중 하나여야 합니다.");
+                throw new InvalidGameNameException("존재하지 않는 게임", "게임은 greeny-neck, keyzzle, pikachu-volley, allcll 중 하나여야 합니다.");
         }
         return new ScoreSubmitResponse(submitStatus, game);
     }
 
 
-    private SubmitStatus upsertCourseRegistration(ScoreSubmitRequest request, User user) {
-        Optional<CourseRegistration> courseScoreByUser = courseRegistrationRepository.findByUserId(user.getId());
+    private SubmitStatus upsertAllcll(ScoreSubmitRequest request, User user) {
+        Optional<Allcll> courseScoreByUser = allcllRepository.findByUserId(user.getId());
         if (courseScoreByUser.isPresent()) {
-            CourseRegistration findCourseScore = courseScoreByUser.get();
+            Allcll findCourseScore = courseScoreByUser.get();
             if (request.getScore() > findCourseScore.getScore()) {
                 findCourseScore.updateScore(request.getScore());
                 log.info("수강신청 점수 업데이트");
@@ -66,9 +66,9 @@ public class GameResultService {
             }
             return SubmitStatus.UNCHANGED;
         }
-        CourseRegistration courseRegistration = new CourseRegistration();
-        courseRegistration.submitScore(request.getScore(), user);
-        courseRegistrationRepository.save(courseRegistration);
+        Allcll allcll = new Allcll();
+        allcll.submitScore(request.getScore(), user);
+        allcllRepository.save(allcll);
         log.info("수강신청 점수 생성");
         return SubmitStatus.CREATED;
     }
