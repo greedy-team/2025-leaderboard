@@ -1,12 +1,9 @@
 package com.greedy.leaderboard.dto;
 
 import com.greedy.leaderboard.entity.User;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserProfileResponse {
