@@ -12,4 +12,12 @@ public interface PikachuVolleyRepository extends JpaRepository<PikachuVolley, Lo
 
     @Query("select p from PikachuVolley p join fetch p.user")
     List<PikachuVolley> findAllWithUser();
+
+    @Query(value = "WITH ranked AS ( " +
+            "SELECT u.nickname, p.score, RANK() OVER (ORDER BY p.score DESC) AS `rank` " +
+            "FROM pikachu_volley p " +
+            "JOIN users u on p.user_id = u.user_id " +
+            " ) " +
+            "SELECT * FROM ranked WHERE `rank` <= 5 ORDER BY `rank` ASC ", nativeQuery = true)
+    List<RankQueryInterface> findTop5WithRank();
 }

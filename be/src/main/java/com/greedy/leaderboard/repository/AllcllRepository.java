@@ -14,4 +14,12 @@ public interface AllcllRepository extends JpaRepository<Allcll, Long> {
     @Query("SELECT a FROM Allcll a JOIN FETCH a.user")
     List<Allcll> findAllWithUser();
 
+    // Native Query 로 랭킹 집계
+    @Query(value = "WITH ranked AS ( " +
+            "SELECT u.nickname, a.score, RANK() OVER (ORDER BY a.score DESC) AS `rank` " +
+            "FROM allcll a " +
+            "JOIN users u on a.user_id = u.user_id " +
+            " ) " +
+            "SELECT * FROM ranked WHERE `rank` <= 5 ORDER BY `rank` ASC ", nativeQuery = true)
+    List<RankQueryInterface> findTop5WithRank();
 }

@@ -16,5 +16,12 @@ public class LeaderboardController {
     private final LeaderboardService leaderboardService;
 
 
+    @GetMapping
+    public ResponseEntity<LeaderBoardResponse> getLeaderBoard() {
+        leaderboardService.rank();
+        return ResponseEntity.ok().build();
+    }
+
+
 
 }
