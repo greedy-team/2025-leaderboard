@@ -2,6 +2,7 @@ package com.greedy.leaderboard.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -44,8 +45,15 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = HttpMessageNotReadableException.class)
+    public ErrorResultResponse httpMessageNotReadableException(HttpMessageNotReadableException e, HttpServletRequest request) {
+        return new ErrorResultResponse("잘못된 요청 값", 400, e.getMessage(), request.getRequestURI());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = RuntimeException.class)
     public ErrorResultResponse runtimeException(RuntimeException e, HttpServletRequest request) {
+        System.out.println(e.getClass().getName());
         return new ErrorResultResponse("알 수 없는 요류 (관리자 문의)", 400, e.getMessage(), request.getRequestURI());
     }
 }
