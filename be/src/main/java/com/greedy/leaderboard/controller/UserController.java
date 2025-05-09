@@ -1,6 +1,8 @@
 package com.greedy.leaderboard.controller;
 
 import com.greedy.leaderboard.dto.UserProfileRequest;
+import com.greedy.leaderboard.dto.UserProfileResponse;
+import com.greedy.leaderboard.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,8 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class UserController {
 
+    private UserService userService;
+
     @PostMapping("/users")
-    public ResponseEntity<Void> create(@Valid @RequestBody UserProfileRequest requestDto) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<UserProfileResponse> createUser(@Valid @RequestBody UserProfileRequest userProfileRequest) {
+        UserProfileResponse userProfileResponse = userService.createUser(userProfileRequest);
+
+        return ResponseEntity.ok().body(userProfileResponse);
     }
 }
