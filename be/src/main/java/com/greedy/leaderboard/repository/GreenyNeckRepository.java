@@ -23,4 +23,9 @@ public interface GreenyNeckRepository extends JpaRepository<GreenyNeck, Long> {
             " )" +
             "SELECT * FROM ranked WHERE `rank` <= 5 ORDER BY `rank` ASC ", nativeQuery = true)
     List<RankQueryInterface> findTop5WithRank();
+
+    @Query(value = "SELECT u.nickname, 3 AS point " +
+            "FROM greeny_neck g " +
+            "JOIN users u ON g.user_id = u.user_id", nativeQuery = true)
+    List<OverallPointInterface> findAllOverallPoint();
 }

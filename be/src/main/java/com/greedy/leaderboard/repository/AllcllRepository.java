@@ -22,4 +22,9 @@ public interface AllcllRepository extends JpaRepository<Allcll, Long> {
             " ) " +
             "SELECT * FROM ranked WHERE `rank` <= 5 ORDER BY `rank` ASC ", nativeQuery = true)
     List<RankQueryInterface> findTop5WithRank();
+
+    @Query(value = "SELECT u.nickname, 3 AS point " +
+            "FROM allcll a " +
+            "JOIN users u ON a.user_id = u.user_id", nativeQuery = true)
+    List<OverallPointInterface> findAllOverallPoint();
 }
