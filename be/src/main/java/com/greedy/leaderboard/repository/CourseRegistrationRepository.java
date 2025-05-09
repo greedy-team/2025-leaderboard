@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface CourseRegistrationRepository extends JpaRepository<CourseRegistration, Long> {
     Optional<CourseRegistration> findByUserId(String userId);
+
+
 }
