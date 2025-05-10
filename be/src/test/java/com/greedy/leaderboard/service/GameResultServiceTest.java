@@ -53,26 +53,26 @@ class GameResultServiceTest {
 
     @Test
     void 등록된_점수가_있다면_점수가_기존보다_높을_때_갱신되어야_한다() {
-        ScoreSubmitRequest request1 = new ScoreSubmitRequest(Game.COURSE_REGISTRATION, userId, 10);
+        ScoreSubmitRequest request1 = new ScoreSubmitRequest(Game.ALLCLL, userId, 10);
         gameResultService.writeGameResult(request1);
         em.flush();
         em.clear();     // 영속성 컨텍스트 초기화
 
         // 새로 등록
-        ScoreSubmitRequest request2 = new ScoreSubmitRequest(Game.COURSE_REGISTRATION, userId, 11);
+        ScoreSubmitRequest request2 = new ScoreSubmitRequest(Game.ALLCLL, userId, 11);
         ScoreSubmitResponse scoreSubmitResponse = gameResultService.writeGameResult(request2);
         assertThat(scoreSubmitResponse.getStatus()).isEqualTo("UPDATED");
     }
 
     @Test
     void 등록된_점수가_있다면_점수가_기존보다_낮다면_점수가_변경되면_안된다() {
-        ScoreSubmitRequest request1 = new ScoreSubmitRequest(Game.COURSE_REGISTRATION, userId, 10);
+        ScoreSubmitRequest request1 = new ScoreSubmitRequest(Game.ALLCLL, userId, 10);
         gameResultService.writeGameResult(request1);
         em.flush();
         em.clear();     // 영속성 컨텍스트 초기화
 
         // 새로 등록
-        ScoreSubmitRequest request2 = new ScoreSubmitRequest(Game.COURSE_REGISTRATION, userId, 8);
+        ScoreSubmitRequest request2 = new ScoreSubmitRequest(Game.ALLCLL, userId, 8);
         ScoreSubmitResponse scoreSubmitResponse = gameResultService.writeGameResult(request2);
         assertThat(scoreSubmitResponse.getStatus()).isEqualTo("UNCHANGED");
     }
