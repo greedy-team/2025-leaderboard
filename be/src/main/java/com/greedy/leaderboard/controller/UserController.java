@@ -6,22 +6,23 @@ import com.greedy.leaderboard.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/users")
-    public ResponseEntity<UserProfileResponse> createUser(@Valid @RequestBody UserProfileRequest userProfileRequest) {
-        UserProfileResponse userProfileResponse = userService.createUser(userProfileRequest);
+    @PostMapping
+    public ResponseEntity<UserProfileResponse> create(@Valid @RequestBody UserProfileRequest requestDto) {
+        UserProfileResponse user = userService.createUser(requestDto);
+        return ResponseEntity.ok().body(user);
+    }
 
-        return ResponseEntity.ok().body(userProfileResponse);
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserProfileResponse> getUserInfo(@PathVariable(name = "userId") String userId) {
+        return ResponseEntity.ok().body(userService.getUserById(userId));
     }
 }

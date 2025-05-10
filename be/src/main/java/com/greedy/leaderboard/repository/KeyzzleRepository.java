@@ -10,15 +10,16 @@ import java.util.Optional;
 public interface KeyzzleRepository extends JpaRepository<Keyzzle, Long> {
     Optional<Keyzzle> findByUserId(String userId);
 
-    @Query("""
-        SELECT k FROM Keyzzle k 
-        WHERE k.score >= (
-            SELECT kz.score 
-            FROM Keyzzle kz 
-            ORDER BY kz.score DESC 
-            LIMIT 1 OFFSET 4
-        )
-        ORDER BY k.score DESC, k.id ASC
-    """)
-    List<Keyzzle> findTop5WithTies();
+    @Query("select k from Keyzzle k join fetch k.user")
+    List<Keyzzle> findAllWithUser();
+
+    // keyzzle 게임은 시간 기준이라 낮은게 높은 순위를 가져야 함
+    @Query(value = "WITH ranked as ( " +
+            "SELECT u.nickname, k.score, RANK() OVER (ORDER BY k.score ASC) AS `rank` " +
+            "FROM keyzzle k " +
+            "JOIN users u on k.user_id = u.user_id " +
+            " )" +
+            "SELECT * FROM ranked WHERE `rank` <= 5 ORDER BY `rank` ASC ", nativeQuery = true)
+    List<RankQueryInterface> findTop5WithRank();
+
 }

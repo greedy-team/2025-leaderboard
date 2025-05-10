@@ -10,15 +10,15 @@ import java.util.Optional;
 public interface PikachuVolleyRepository extends JpaRepository<PikachuVolley, Long> {
     Optional<PikachuVolley> findByUserId(String userId);
 
-    @Query("""
-        SELECT p FROM PikachuVolley p 
-        WHERE p.score >= (
-            SELECT pv.score 
-            FROM PikachuVolley pv 
-            ORDER BY pv.score DESC 
-            LIMIT 1 OFFSET 4
-        )
-        ORDER BY p.score DESC, p.id ASC
-    """)
-    List<PikachuVolley> findTop5WithTies();
+    @Query("select p from PikachuVolley p join fetch p.user")
+    List<PikachuVolley> findAllWithUser();
+
+    @Query(value = "WITH ranked AS ( " +
+            "SELECT u.nickname, p.score, RANK() OVER (ORDER BY p.score DESC) AS `rank` " +
+            "FROM pikachu_volley p " +
+            "JOIN users u on p.user_id = u.user_id " +
+            " ) " +
+            "SELECT * FROM ranked WHERE `rank` <= 5 ORDER BY `rank` ASC ", nativeQuery = true)
+    List<RankQueryInterface> findTop5WithRank();
+
 }

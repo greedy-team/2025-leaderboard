@@ -14,8 +14,8 @@ public class PikachuVolley extends BaseEntity implements GameEntity{
 
     private int score;      // 점수
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", unique = true)
     private User user;
 
 

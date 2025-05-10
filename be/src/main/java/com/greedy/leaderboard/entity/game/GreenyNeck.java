@@ -14,8 +14,8 @@ public class GreenyNeck extends BaseEntity implements GameEntity{
 
     private double score;       // 시간
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", unique = true)
     private User user;
 
     public void submitScore(double score, User user) {

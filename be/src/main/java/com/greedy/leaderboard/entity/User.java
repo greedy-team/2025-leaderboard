@@ -5,11 +5,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity @Getter
 @Table(name = "users")
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {
 
@@ -23,9 +25,4 @@ public class User extends BaseEntity {
     @Column(name = "phone", unique = true)
     private String phone;
 
-    public User(String userId, String nickname, String phone) {
-        this.userId = userId;
-        this.nickname = nickname;
-        this.phone = phone;
-    }
 }

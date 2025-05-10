@@ -9,9 +9,5 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
 
-    // 닉네임 중복 체크
     Optional<User> findByNickname(String nickname);
-
-    // 전화번호 중복 체크
-    Optional<User> findByPhone(String phone);
 }

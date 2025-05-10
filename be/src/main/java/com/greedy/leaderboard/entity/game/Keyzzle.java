@@ -14,8 +14,8 @@ public class Keyzzle extends BaseEntity implements GameEntity{
 
     private double score;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", unique = true)
     private User user;
 
 
