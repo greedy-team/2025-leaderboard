@@ -94,7 +94,7 @@ public class LeaderboardService {
         return result;
     }
 
-    public GameRankingResponse getGameRankings(String gameName) {
+    public GameRankingResponse getSingleGameRankings(String gameName) {
         Game game = Game.from(gameName);
 
         List<GameRankingResponse.Ranking> rankings;
