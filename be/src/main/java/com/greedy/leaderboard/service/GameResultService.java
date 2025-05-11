@@ -77,7 +77,6 @@ public class GameResultService {
             PikachuVolley findPikachuScore = pikachuScoreByUser.get();
             if (request.getScore() > findPikachuScore.getScore()) {      // 새 점수가 높으면 업데이트 (점수)
                 findPikachuScore.updateScore(request.getScore());
-                log.info("피카츄 배구 점수 업데이트");
                 return SubmitStatus.UPDATED;
             }
             return SubmitStatus.UNCHANGED;
@@ -85,7 +84,6 @@ public class GameResultService {
         PikachuVolley pikachuVolley = new PikachuVolley();
         pikachuVolley.submitScore(request.getScore(), findUser);
         pikachuVolleyRepository.save(pikachuVolley);
-        log.info("피카츄 배구 점수 생성");
         return SubmitStatus.CREATED;
     }
 
@@ -95,7 +93,6 @@ public class GameResultService {
             GreenyNeck findGreenyNeck = greenyScoreByUser.get();
             if (request.getScore() < findGreenyNeck.getScore()) {       // 새 점수가 낮으면 업데이트 (시간)
                 findGreenyNeck.updateScore(request.getScore());
-                log.info("그린이 목 늘이기 점수 업데이트");
                 return SubmitStatus.UPDATED;
             }
             return SubmitStatus.UNCHANGED;
@@ -103,7 +100,6 @@ public class GameResultService {
         GreenyNeck greenyNeck = new GreenyNeck();
         greenyNeck.submitScore(request.getScore(), findUser);
         greenyNeckRepository.save(greenyNeck);
-        log.info("그린이 목 늘이기 점수 생성");
         return SubmitStatus.CREATED;
     }
 
@@ -113,7 +109,6 @@ public class GameResultService {
             Keyzzle findKeyzzleScore = keyzzleScoreByUser.get();
             if (request.getScore() < findKeyzzleScore.getScore()) {       // 새 점수가 낮으면 업데이트 (시간)
                 findKeyzzleScore.updateScore(request.getScore());
-                log.info("키즐 게임 업데이트");
                 return SubmitStatus.UPDATED;
             }
             return SubmitStatus.UNCHANGED;
@@ -121,7 +116,6 @@ public class GameResultService {
         Keyzzle keyzzle = new Keyzzle();
         keyzzle.submitScore(request.getScore(), findUser);
         keyzzleRepository.save(keyzzle);
-        log.info("키즐 점수 생성");
         return SubmitStatus.CREATED;
     }
 
