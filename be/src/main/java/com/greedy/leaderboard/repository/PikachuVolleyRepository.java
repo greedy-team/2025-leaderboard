@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PikachuVolleyRepository extends JpaRepository<PikachuVolley, Long> {
-    Optional<PikachuVolley> findByUserId(String userId);
+    Optional<PikachuVolley> findByUser_UserId(String userId);
 
     @Query("select p from PikachuVolley p join fetch p.user")
     List<PikachuVolley> findAllWithUser();
@@ -20,5 +20,5 @@ public interface PikachuVolleyRepository extends JpaRepository<PikachuVolley, Lo
             " ) " +
             "SELECT * FROM ranked WHERE `rank` <= 5 ORDER BY `rank` ASC ", nativeQuery = true)
     List<RankQueryInterface> findTop5WithRank();
-    
+
 }

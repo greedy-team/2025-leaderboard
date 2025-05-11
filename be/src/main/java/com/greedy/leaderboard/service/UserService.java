@@ -3,15 +3,13 @@ package com.greedy.leaderboard.service;
 import com.greedy.leaderboard.dto.UserProfileRequest;
 import com.greedy.leaderboard.dto.UserProfileResponse;
 import com.greedy.leaderboard.entity.User;
-import com.greedy.leaderboard.exception.DuplicateNicknameException;
+import com.greedy.leaderboard.exception.DuplicateUserInfoException;
 import com.greedy.leaderboard.exception.NotFoundUserException;
 import com.greedy.leaderboard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -26,15 +24,21 @@ public class UserService {
     public UserProfileResponse createUser(UserProfileRequest userProfileRequest) {
 
         // 1. 사용자 닉네임 중복 체크
-        Optional<User> userByNickname = userRepository.findByNickname(userProfileRequest.getNickname());
-        if (userByNickname.isPresent()) {
-            throw new DuplicateNicknameException("닉네임 중복", "이미 사용 중인 닉네임입니다.");
+        if (userRepository.existsByNickname(userProfileRequest.getNickname())) {
+            throw new DuplicateUserInfoException("닉네임 중복", "이미 사용 중인 닉네임입니다.");
         }
 
-        // 3. 사용자 Id 생성 (랜덤 4자리 문자열)
+        // 1. 사용자 전화번호 중복 체크
+        if (userProfileRequest.getNickname() != null) {
+            if (userRepository.existsByPhone(userProfileRequest.getPhone())) {
+                throw new DuplicateUserInfoException("전화번호 중복", "이미 등록된 전화번호입니다.");
+            }
+        }
+
+        // 2. 사용자 Id 생성 (랜덤 4자리 문자열)
         String userId = generateRandomId();
 
-        // 4. 사용자 등록 (DB 저장)
+        // 3. 사용자 등록 (DB 저장)
         User newUser = new User(userId, userProfileRequest.getNickname(), userProfileRequest.getPhone());
         userRepository.save(newUser);
 

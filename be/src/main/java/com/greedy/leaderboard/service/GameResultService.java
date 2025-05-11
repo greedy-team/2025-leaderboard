@@ -56,7 +56,7 @@ public class GameResultService {
 
 
     private SubmitStatus upsertAllcll(ScoreSubmitRequest request, User user) {
-        Optional<Allcll> courseScoreByUser = allcllRepository.findByUserId(user.getId());
+        Optional<Allcll> courseScoreByUser = allcllRepository.findByUser_UserId(user.getUserId());
         if (courseScoreByUser.isPresent()) {
             Allcll findCourseScore = courseScoreByUser.get();
             if (request.getScore() > findCourseScore.getScore()) {
@@ -72,11 +72,12 @@ public class GameResultService {
     }
 
     private SubmitStatus upsertPikachuVolley(ScoreSubmitRequest request, User findUser) {
-        Optional<PikachuVolley> pikachuScoreByUser = pikachuVolleyRepository.findByUserId(findUser.getId());
+        Optional<PikachuVolley> pikachuScoreByUser = pikachuVolleyRepository.findByUser_UserId(findUser.getUserId());
         if (pikachuScoreByUser.isPresent()) {
             PikachuVolley findPikachuScore = pikachuScoreByUser.get();
             if (request.getScore() > findPikachuScore.getScore()) {      // 새 점수가 높으면 업데이트 (점수)
                 findPikachuScore.updateScore(request.getScore());
+                log.info("피카츄 배구 점수 업데이트");
                 return SubmitStatus.UPDATED;
             }
             return SubmitStatus.UNCHANGED;
@@ -84,15 +85,17 @@ public class GameResultService {
         PikachuVolley pikachuVolley = new PikachuVolley();
         pikachuVolley.submitScore(request.getScore(), findUser);
         pikachuVolleyRepository.save(pikachuVolley);
+        log.info("피카츄 배구 점수 생성");
         return SubmitStatus.CREATED;
     }
 
     private SubmitStatus upsertGreenyNeck(ScoreSubmitRequest request, User findUser) {
-        Optional<GreenyNeck> greenyScoreByUser = greenyNeckRepository.findByUserId(findUser.getId());
+        Optional<GreenyNeck> greenyScoreByUser = greenyNeckRepository.findByUser_UserId(findUser.getUserId());
         if (greenyScoreByUser.isPresent()) {
             GreenyNeck findGreenyNeck = greenyScoreByUser.get();
             if (request.getScore() < findGreenyNeck.getScore()) {       // 새 점수가 낮으면 업데이트 (시간)
                 findGreenyNeck.updateScore(request.getScore());
+                log.info("그린이 목 늘이기 점수 업데이트");
                 return SubmitStatus.UPDATED;
             }
             return SubmitStatus.UNCHANGED;
@@ -100,15 +103,17 @@ public class GameResultService {
         GreenyNeck greenyNeck = new GreenyNeck();
         greenyNeck.submitScore(request.getScore(), findUser);
         greenyNeckRepository.save(greenyNeck);
+        log.info("그린이 목 늘이기 점수 생성");
         return SubmitStatus.CREATED;
     }
 
     private SubmitStatus upsertKeyzzle(ScoreSubmitRequest request, User findUser) {
-        Optional<Keyzzle> keyzzleScoreByUser = keyzzleRepository.findByUserId(findUser.getId());
+        Optional<Keyzzle> keyzzleScoreByUser = keyzzleRepository.findByUser_UserId(findUser.getUserId());
         if (keyzzleScoreByUser.isPresent()) {
             Keyzzle findKeyzzleScore = keyzzleScoreByUser.get();
             if (request.getScore() < findKeyzzleScore.getScore()) {       // 새 점수가 낮으면 업데이트 (시간)
                 findKeyzzleScore.updateScore(request.getScore());
+                log.info("키즐 게임 업데이트");
                 return SubmitStatus.UPDATED;
             }
             return SubmitStatus.UNCHANGED;
@@ -116,6 +121,7 @@ public class GameResultService {
         Keyzzle keyzzle = new Keyzzle();
         keyzzle.submitScore(request.getScore(), findUser);
         keyzzleRepository.save(keyzzle);
+        log.info("키즐 점수 생성");
         return SubmitStatus.CREATED;
     }
 
