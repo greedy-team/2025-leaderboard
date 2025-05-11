@@ -7,7 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @Component
 public class RandomUserIdGenerator implements IdGenerator {
 
-    private static final String BASE_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    private static final String BASE_CHARACTERS = "ABCDEIJKLMNOPQRSUVWXYabcdefghijklmnopqrstuvwxyz0123456789";
     private static final int USER_ID_LENGTH = 4;
     private final ThreadLocalRandom random = ThreadLocalRandom.current();
 
