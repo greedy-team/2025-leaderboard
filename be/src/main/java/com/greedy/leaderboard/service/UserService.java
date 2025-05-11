@@ -31,10 +31,10 @@ public class UserService {
             throw new DuplicateNicknameException("닉네임 중복", "이미 사용 중인 닉네임입니다.");
         }
 
-        // 3. 사용자 Id 생성 (랜덤 4자리 문자열)
+        // 2. 사용자 Id 생성 (랜덤 4자리 문자열)
         String userId = generateRandomId();
 
-        // 4. 사용자 등록 (DB 저장)
+        // 3. 사용자 등록 (DB 저장)
         User newUser = new User(userId, userProfileRequest.getNickname(), userProfileRequest.getPhone());
         userRepository.save(newUser);
 

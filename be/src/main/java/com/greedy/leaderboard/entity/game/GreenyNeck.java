@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Entity @Getter
 @Table(name = "greeny_neck")
-public class GreenyNeck extends BaseEntity {
+public class GreenyNeck extends BaseEntity implements GameEntity{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,5 +25,15 @@ public class GreenyNeck extends BaseEntity {
 
     public void updateScore(double score) {
         this.score = score;
+    }
+
+    @Override
+    public double getScore() {
+        return this.score;
+    }
+
+    @Override
+    public String getNickname() {
+        return this.user.getNickname();
     }
 }

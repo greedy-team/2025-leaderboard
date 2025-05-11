@@ -16,9 +16,13 @@ import lombok.NoArgsConstructor;
 public class User extends BaseEntity {
 
     @Id
-    @Column(name = "user_id")
-    private String id;
+    @Column(name = "user_id", nullable = false, unique = true)
+    private String userId;
+
+    @Column(name = "nickname", nullable = false, unique = true)
     private String nickname;
+
+    @Column(name = "phone")
     private String phone;
 
 }

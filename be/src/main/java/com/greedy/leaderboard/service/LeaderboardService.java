@@ -1,7 +1,11 @@
 package com.greedy.leaderboard.service;
 
+import com.greedy.leaderboard.dto.GameRankingResponse;
 import com.greedy.leaderboard.dto.LeaderBoardResponse;
 import com.greedy.leaderboard.dto.LeaderboardRanking;
+import com.greedy.leaderboard.entity.game.Game;
+import com.greedy.leaderboard.entity.game.GameEntity;
+import com.greedy.leaderboard.exception.InvalidGameNameException;
 import com.greedy.leaderboard.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -90,4 +94,36 @@ public class LeaderboardService {
         return result;
     }
 
+    public GameRankingResponse getSingleGameRankings(String gameName) {
+        Game game = Game.from(gameName);
+
+        List<GameRankingResponse.Ranking> rankings;
+
+        // Repo에서 가져온 순위 그대로 매핑
+        switch (game) {
+            case ALLCLL -> rankings = allcllRepository.findTop5WithRank()
+                    .stream()
+                    .map(entity -> new GameRankingResponse.Ranking(entity.getRank(), entity.getNickname(), entity.getScore()))
+                    .toList();
+
+            case GREENY_NECK -> rankings = greenyNeckRepository.findTop5WithRank()
+                    .stream()
+                    .map(entity -> new GameRankingResponse.Ranking(entity.getRank(), entity.getNickname(), entity.getScore()))
+                    .toList();
+
+            case KEYZZLE -> rankings = keyzzleRepository.findTop5WithRank()
+                    .stream()
+                    .map(entity -> new GameRankingResponse.Ranking(entity.getRank(), entity.getNickname(), entity.getScore()))
+                    .toList();
+
+            case PIKACHU_VOLLEY -> rankings = pikachuVolleyRepository.findTop5WithRank()
+                    .stream()
+                    .map(entity -> new GameRankingResponse.Ranking(entity.getRank(), entity.getNickname(), entity.getScore()))
+                    .toList();
+
+            default -> throw new InvalidGameNameException("게임 이름 오류", "올바른 게임 이름을 입력해주세요.");
+        }
+
+        return new GameRankingResponse(game.getGameNameKR(), rankings);
+    }
 }
