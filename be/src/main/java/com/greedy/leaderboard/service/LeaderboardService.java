@@ -99,42 +99,31 @@ public class LeaderboardService {
 
         List<GameRankingResponse.Ranking> rankings;
 
+        // Repo에서 가져온 순위 그대로 매핑
         switch (game) {
-            case ALLCLL -> rankings = processRanking(allcllRepository.findTop5WithRank());
-            case GREENY_NECK -> rankings = processRanking(greenyNeckRepository.findTop5WithRank());
-            case KEYZZLE -> rankings = processRanking(keyzzleRepository.findTop5WithRank());
-            case PIKACHU_VOLLEY -> rankings = processRanking(pikachuVolleyRepository.findTop5WithRank());
+            case ALLCLL -> rankings = allcllRepository.findTop5WithRank()
+                    .stream()
+                    .map(entity -> new GameRankingResponse.Ranking(entity.getRank(), entity.getNickname(), entity.getScore()))
+                    .toList();
+
+            case GREENY_NECK -> rankings = greenyNeckRepository.findTop5WithRank()
+                    .stream()
+                    .map(entity -> new GameRankingResponse.Ranking(entity.getRank(), entity.getNickname(), entity.getScore()))
+                    .toList();
+
+            case KEYZZLE -> rankings = keyzzleRepository.findTop5WithRank()
+                    .stream()
+                    .map(entity -> new GameRankingResponse.Ranking(entity.getRank(), entity.getNickname(), entity.getScore()))
+                    .toList();
+
+            case PIKACHU_VOLLEY -> rankings = pikachuVolleyRepository.findTop5WithRank()
+                    .stream()
+                    .map(entity -> new GameRankingResponse.Ranking(entity.getRank(), entity.getNickname(), entity.getScore()))
+                    .toList();
+
             default -> throw new InvalidGameNameException("게임 이름 오류", "올바른 게임 이름을 입력해주세요.");
         }
 
         return new GameRankingResponse(game.getGameNameKR(), rankings);
-    }
-
-    private <T extends GameEntity> List<GameRankingResponse.Ranking> processRanking(List<RankQueryInterface> entities) {
-        List<GameRankingResponse.Ranking> rankings = new ArrayList<>();
-
-        int currentRank = 1;
-        double previousScore = -1;
-        int sameRankCount = 0;
-
-        for (int i = 0; i < entities.size(); i++) {
-            var entity = entities.get(i);
-
-            double score = entity.getScore();
-            String nickname = entity.getNickname();
-
-            if (score != previousScore) {
-                currentRank += sameRankCount;
-                sameRankCount = 1;
-            } else {
-                sameRankCount++;
-            }
-
-            previousScore = score;
-
-            rankings.add(new GameRankingResponse.Ranking(currentRank, nickname, score));
-        }
-
-        return rankings;
     }
 }

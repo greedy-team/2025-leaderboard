@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PikachuVolleyRepository extends JpaRepository<PikachuVolley, Long> {
-    Optional<PikachuVolley> findByUserId(String userId);
+    Optional<PikachuVolley> findByUser_UserId(String userId);
 
     @Query("select p from PikachuVolley p join fetch p.user")
     List<PikachuVolley> findAllWithUser();

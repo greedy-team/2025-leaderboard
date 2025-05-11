@@ -27,6 +27,4 @@ public class LeaderboardController {
         return ResponseEntity.ok().body(leaderboardService.aggregateOverallRanking());
     }
 
-
-
 }

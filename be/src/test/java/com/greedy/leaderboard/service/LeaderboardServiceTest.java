@@ -33,14 +33,14 @@ class LeaderboardServiceTest {
     @BeforeEach
     void setUp() {
         // 유저 8명 등록
-        userRepository.save(new User("0000", "이승용", "010-0000-0000"));
-        userRepository.save(new User("0001", "김주환", "010-0000-0000"));
-        userRepository.save(new User("0002", "김지우", "010-0000-0000"));
-        userRepository.save(new User("0003", "이창희", "010-0000-0000"));
-        userRepository.save(new User("0004", "허석준", "010-0000-0000"));
-        userRepository.save(new User("0005", "황혜림", "010-0000-0000"));
-        userRepository.save(new User("0006", "전서희", "010-0000-0000"));
-        userRepository.save(new User("0007", "염지환", "010-0000-0000"));
+        userRepository.save(new User("0000", "이승용", "010-0000-0001"));
+        userRepository.save(new User("0001", "김주환", "010-0000-0002"));
+        userRepository.save(new User("0002", "김지우", "010-0000-0003"));
+        userRepository.save(new User("0003", "이창희", "010-0000-0004"));
+        userRepository.save(new User("0004", "허석준", "010-0000-0005"));
+        userRepository.save(new User("0005", "황혜림", "010-0000-0006"));
+        userRepository.save(new User("0006", "전서희", "010-0000-0007"));
+        userRepository.save(new User("0007", "염지환", "010-0000-0008"));
     }
 
     @Test

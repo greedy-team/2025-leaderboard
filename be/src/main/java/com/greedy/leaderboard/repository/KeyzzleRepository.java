@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface KeyzzleRepository extends JpaRepository<Keyzzle, Long> {
-    Optional<Keyzzle> findByUserId(String userId);
+    Optional<Keyzzle> findByUser_UserId(String userId);
 
     @Query("select k from Keyzzle k join fetch k.user")
     List<Keyzzle> findAllWithUser();

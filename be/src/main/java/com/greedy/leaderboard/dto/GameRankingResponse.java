@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Getter
 @Data
 @AllArgsConstructor
 public class GameRankingResponse {

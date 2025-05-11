@@ -56,7 +56,7 @@ public class GameResultService {
 
 
     private SubmitStatus upsertAllcll(ScoreSubmitRequest request, User user) {
-        Optional<Allcll> courseScoreByUser = allcllRepository.findByUserId(user.getUserId());
+        Optional<Allcll> courseScoreByUser = allcllRepository.findByUser_UserId(user.getUserId());
         if (courseScoreByUser.isPresent()) {
             Allcll findCourseScore = courseScoreByUser.get();
             if (request.getScore() > findCourseScore.getScore()) {
@@ -72,7 +72,7 @@ public class GameResultService {
     }
 
     private SubmitStatus upsertPikachuVolley(ScoreSubmitRequest request, User findUser) {
-        Optional<PikachuVolley> pikachuScoreByUser = pikachuVolleyRepository.findByUserId(findUser.getUserId());
+        Optional<PikachuVolley> pikachuScoreByUser = pikachuVolleyRepository.findByUser_UserId(findUser.getUserId());
         if (pikachuScoreByUser.isPresent()) {
             PikachuVolley findPikachuScore = pikachuScoreByUser.get();
             if (request.getScore() > findPikachuScore.getScore()) {      // 새 점수가 높으면 업데이트 (점수)
@@ -90,7 +90,7 @@ public class GameResultService {
     }
 
     private SubmitStatus upsertGreenyNeck(ScoreSubmitRequest request, User findUser) {
-        Optional<GreenyNeck> greenyScoreByUser = greenyNeckRepository.findByUserId(findUser.getUserId());
+        Optional<GreenyNeck> greenyScoreByUser = greenyNeckRepository.findByUser_UserId(findUser.getUserId());
         if (greenyScoreByUser.isPresent()) {
             GreenyNeck findGreenyNeck = greenyScoreByUser.get();
             if (request.getScore() < findGreenyNeck.getScore()) {       // 새 점수가 낮으면 업데이트 (시간)
@@ -108,7 +108,7 @@ public class GameResultService {
     }
 
     private SubmitStatus upsertKeyzzle(ScoreSubmitRequest request, User findUser) {
-        Optional<Keyzzle> keyzzleScoreByUser = keyzzleRepository.findByUserId(findUser.getUserId());
+        Optional<Keyzzle> keyzzleScoreByUser = keyzzleRepository.findByUser_UserId(findUser.getUserId());
         if (keyzzleScoreByUser.isPresent()) {
             Keyzzle findKeyzzleScore = keyzzleScoreByUser.get();
             if (request.getScore() < findKeyzzleScore.getScore()) {       // 새 점수가 낮으면 업데이트 (시간)
