@@ -39,8 +39,8 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(value = DuplicateNicknameException.class)
-    public ErrorResultResponse runtimeException(DuplicateNicknameException e, HttpServletRequest request) {
+    @ExceptionHandler(value = DuplicateUserInfoException.class)
+    public ErrorResultResponse runtimeException(DuplicateUserInfoException e, HttpServletRequest request) {
         return new ErrorResultResponse(e.getTitle(), 400, e.getMessage(), request.getRequestURI());
     }
 
