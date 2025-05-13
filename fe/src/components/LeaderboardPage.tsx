@@ -4,7 +4,7 @@ import { Header } from "../components/Header";
 import { OverallLeaderboard } from "../components/OverallLeaderboard";
 import { GameLeaderboard } from "./GameLeaderboard";
 import type { Player, GameScore } from "../types/leaderboard";
-import { mockURL } from "../components/api/api";
+import { apiURL } from "../components/api/api";
 
 const gameTitles = ["그린이 목 늘이기", "Keyzzle", "피카츄 배구", "ALLCLL"];
 
@@ -25,23 +25,39 @@ export const LeaderboardPage: React.FC = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${mockURL}/players`);
-        const players: Player[] = response.data;
-        console.log(players);
 
-        setOverall(players);
+        // 전체 순위 API 호출
+        const overallRes = await axios.get(`${apiURL}/leader-board/overall`);
+        const overallPlayers: Player[] = overallRes.data.rankings.map(
+          (p: any) => ({
+            name: p.nickname,
+            score: p.score,
+          })
+        );
+        setOverall(overallPlayers);
 
-        const gamesData = Object.fromEntries(
-          gameTitles.map((_, idx) => [
-            idx,
-            players.map((player) => ({
-              name: player.name,
-              score: Math.floor(Math.random() * 200) + 300,
-            })),
-          ])
-        ) as Record<string, GameScore[]>;
+        // 미니게임별 순위 API 호출
+        const gameApiMap = {
+          "그린이 목 늘이기": "greeny-neck",
+          Keyzzle: "keyzzle",
+          "피카츄 배구": "pikachu-volley",
+          "수강신청 연습": "allcll",
+        } as const;
 
-        setGames(gamesData);
+        const gameResults = await Promise.all(
+          Object.entries(gameApiMap).map(async ([korTitle, engName]) => {
+            const res = await axios.get(`${apiURL}/leader-board/${engName}`);
+            const scores: GameScore[] = res.data.rankings.map((entry: any) => ({
+              name: entry.nickname,
+              score: entry.score,
+            }));
+            return [korTitle, scores] as [string, GameScore[]];
+          })
+        );
+
+        const gameScoreMap = Object.fromEntries(gameResults);
+        setGames(gameScoreMap);
+
         setError(null);
       } catch (error) {
         setError("데이터를 불러오는데 실패했습니다.");
@@ -67,7 +83,7 @@ export const LeaderboardPage: React.FC = () => {
   }
 
   return (
-    <div className="w-[1440px] h-[1024px] relative overflow-hidden bg-white font-sans">
+    <div className="min-w-[1440px] min-h-[1024px] relative overflow-visible bg-white font-sans">
       <Header />
       <OverallLeaderboard players={overall} />
       <GameLeaderboard gameScores={games} titles={gameTitles} />

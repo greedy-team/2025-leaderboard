@@ -1,2 +1,2 @@
-export const mockURL =
-  "https://5b924f99-f97e-4a06-89c6-275f458e6914.mock.pstmn.io";
+export const apiURL =
+  "https://0by7j8suf2.execute-api.ap-northeast-2.amazonaws.com/proxy/api";
