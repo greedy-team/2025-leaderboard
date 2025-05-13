@@ -64,4 +64,10 @@ public class UserService {
                 new NotFoundUserException("등록되지 않은 유저", "아이디가 " + userId + "인 유저는 존재하지 않습니다."));
         return new UserProfileResponse(findUser);
     }
+
+    public UserProfileResponse getUserByPhone(String phone) {
+        User findUser = userRepository.findByPhone(phone).orElseThrow(() ->
+                new NotFoundUserException("등록되지 않은 유저", "전화번호가 " + phone + "인 유저는 존재하지 않습니다."));
+        return new UserProfileResponse(findUser);
+    }
 }
