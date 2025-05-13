@@ -2,7 +2,7 @@ import React from "react";
 import type { Player } from "../types/leaderboard";
 import { OverallCard } from "../components/OverallCard";
 
-const leftPos = [0, 240, 480, 720, 960];
+const leftPos = [0, 280, 560, 840, 1120];
 const heights = [229, 178, 123, 79, 46];
 const tops = [74, 125, 180, 224, 257];
 const colors = ["#ffc756", "#ff7474", "#60bdff", "#c669ff", "#70ed59"];
@@ -13,7 +13,7 @@ interface Props {
   players: Player[];
 }
 export const OverallLeaderboard: React.FC<Props> = ({ players }) => (
-  <div className="w-[1200px] h-[375px] absolute left-[120px] top-[120px] overflow-hidden">
+  <div className="w-[1320px] h-[375px] absolute left-1/2 -translate-x-1/2 top-[120px] overflow-visible">
     <p className="absolute left-[7px] top-0 text-[45px] font-bold text-black">
       🏆 종합 순위표
     </p>

@@ -44,7 +44,9 @@ export const OverallCard: React.FC<OverallCardProps> = ({
         className="absolute left-1/2 -translate-x-1/2 text-center font-bold text-black"
         style={{ top: nameTop }}
       >
-        <span className="block text-[32px]">{player.name}</span>
+        <span className="block text-[32px] whitespace-nowrap overflow-hidden text-ellipsis max-w-[220px]">
+          {player.name}
+        </span>
         <span className="text-2xl">{player.score}점</span>
       </p>
     </div>
