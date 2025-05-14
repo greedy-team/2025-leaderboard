@@ -1,5 +1,6 @@
 package com.greedy.leaderboard.controller;
 
+import com.greedy.leaderboard.dto.UserPhoneRequest;
 import com.greedy.leaderboard.dto.UserProfileRequest;
 import com.greedy.leaderboard.dto.UserProfileResponse;
 import com.greedy.leaderboard.service.UserService;
@@ -25,4 +26,11 @@ public class UserController {
     public ResponseEntity<UserProfileResponse> getUserInfo(@PathVariable(name = "userId") String userId) {
         return ResponseEntity.ok().body(userService.getUserById(userId));
     }
+
+    @GetMapping("/phone")
+    public ResponseEntity<UserProfileResponse> getUserByPhone(@Valid @RequestBody UserPhoneRequest requestDto) {
+        UserProfileResponse user = userService.getUserByPhone(requestDto.getPhone());
+        return ResponseEntity.ok().body(user);
+    }
+
 }

@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, String> {
 
     Optional<User> findByNickname(String nickname);
+    Optional<User> findByPhone(String nickname);
 
     @Query(value = "SELECT * FROM users WHERE BINARY user_id = :id", nativeQuery = true)
     Optional<User> findByIdCaseSensitive(@Param("id") String id);
