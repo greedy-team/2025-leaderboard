@@ -55,12 +55,12 @@ public class UserService {
             if (retries >= maxRetries) {
                 throw new RuntimeException("ID 생성 실패: 너무 많은 시도 후 중복 발생.");
             }
-        } while (userRepository.existsById(userId));
+        } while (userRepository.existsByUserIdCaseSensitive(userId) == 1L);
         return userId;
     }
 
     public UserProfileResponse getUserById(String userId) {
-        User findUser = userRepository.findById(userId).orElseThrow(() ->
+        User findUser = userRepository.findByIdCaseSensitive(userId).orElseThrow(() ->
                 new NotFoundUserException("등록되지 않은 유저", "아이디가 " + userId + "인 유저는 존재하지 않습니다."));
         return new UserProfileResponse(findUser);
     }
