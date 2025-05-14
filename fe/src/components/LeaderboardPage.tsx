@@ -41,7 +41,7 @@ export const LeaderboardPage: React.FC = () => {
           "그린이 목 늘이기": "greeny-neck",
           Keyzzle: "keyzzle",
           "피카츄 배구": "pikachu-volley",
-          "수강신청 연습": "allcll",
+          ALLCLL: "allcll",
         } as const;
 
         const gameResults = await Promise.all(
