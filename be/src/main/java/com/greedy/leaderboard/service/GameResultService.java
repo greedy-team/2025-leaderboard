@@ -122,8 +122,8 @@ public class GameResultService {
     }
 
     private User getUserByUserId(String userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundUserException("등록되지 않은 유저", "아이디가 " + userId + "인 유저는 존재하지 않습니다."));
+        return userRepository.findByIdCaseSensitive(userId)
+                 .orElseThrow(() -> new NotFoundUserException("등록되지 않은 유저", "아이디가 " + userId + "인 유저는 존재하지 않습니다."));
     }
 
     // DB 조작용 업데이트
