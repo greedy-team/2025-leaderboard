@@ -2,17 +2,26 @@ package com.greedy.leaderboard.entity.game;
 
 import com.greedy.leaderboard.entity.BaseEntity;
 import com.greedy.leaderboard.entity.User;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.Getter;
 
-@Entity @Getter
+@Entity
+@Getter
 @Table(name = "allcll")
 public class Allcll extends BaseEntity implements GameEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int score;
+    private double score;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", unique = true)
@@ -20,12 +29,12 @@ public class Allcll extends BaseEntity implements GameEntity {
 
 
     public void submitScore(double score, User user) {
-        this.score = (int) score;
+        this.score = score;
         this.user = user;
     }
 
     public void updateScore(double score) {
-        this.score = (int) score;
+        this.score = score;
     }
 
     @Override

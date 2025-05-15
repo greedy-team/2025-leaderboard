@@ -12,7 +12,7 @@ public class PikachuVolley extends BaseEntity implements GameEntity{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int score;      // 점수
+    private double score;      // 점수
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", unique = true)
@@ -20,12 +20,12 @@ public class PikachuVolley extends BaseEntity implements GameEntity{
 
 
     public void submitScore(double score, User user) {
-        this.score = (int) score;
+        this.score = score;
         this.user = user;
     }
 
     public void updateScore(double score) {
-        this.score = (int) score;
+        this.score = score;
     }
 
     @Override
